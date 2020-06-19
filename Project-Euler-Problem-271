@@ -1,0 +1,17 @@
+	(defn factorize [n]
+	          (loop [n f 2 r [] ]
+	            (if (<= n 1)  r                          
+	              (if (< n (* f f)) (conj r n)            
+	                (if (zero? (rem n f))
+	                  (recur (quot n f) f (conj r f))      
+	                  (recur n (inc f) r ))))))
+	(defn poly [cs x] (reduce #(+ (* %1 x ) %2) cs))
+	(defn in-a [n]
+	         (empty?
+	           (filter #(zero?(rem (poly [1 3 3] %) n))
+	             (range 1 n))))
+	(defn PE271 [n]
+	        (let [k (reduce * (filter in-a  (factorize n)))]
+	          (reduce +
+	           (filter #( = (rem (* % % %) n) 1) 
+	             (range (inc k) n k)))))
